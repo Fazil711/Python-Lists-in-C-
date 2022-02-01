@@ -42,10 +42,11 @@ void List::clear() {
 }
 
 void List::insert(int index, int value) {
-	if (sz < index) {
-		std::cout << "Idiot your array isn't even that big" << std::endl;
+	if (index < 0 || index >= sz) {
+		std::cout << "Invalid index" << std::endl;
+
 	}
-	else if (sz < capacity) {
+	if (sz != capacity) {
 		for (int i = sz; i > index; i--) {
 			arr[i] = arr[i - 1];
 		}
@@ -55,16 +56,12 @@ void List::insert(int index, int value) {
 	else {
 		capacity *= 2;
 		int* temp = new int[capacity];
-		for (int i = 0; i < index - 1; ++i) {
+		for (int i = 0; i < sz; ++i) {
 			temp[i] = arr[i];
 		}
-		temp[index] = value;
-		for (int i = index + 1; i < sz + 1; i--) {
-			temp[i + 1] = arr[i];
-		}
-		++sz;
 		delete[] arr;
 		arr = temp;
+		insert(index, value);
 	}
 }
 
